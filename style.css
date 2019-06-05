@@ -1,0 +1,45 @@
+table {
+	border-collapse: collapse;
+	margin-top: 50px;
+}
+
+td,
+th {
+	width: 70px;
+	height: 70px;
+}
+td {
+	border: 1px solid #ddd;
+}
+
+td:hover {
+	background-color: #aaa;
+	cursor: pointer;
+}
+.pairedCells__wrap {
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.pairedCells__auxiliary {
+	margin-top: 15px;
+	display: flex;
+}
+.pairedCells__start {
+	background-color: #ddd;
+	padding: 5px 20px;
+	border-radius: 2px;
+	font-size: 18px;
+}
+.pairedCells__start:hover {
+	background-color: #eee;
+}
+.pairedCells__start:active {
+	background-color: #ccc;
+}
+
+.pairedCells__timer {
+	padding: 15px;
+	font-size: 18px;
+}
