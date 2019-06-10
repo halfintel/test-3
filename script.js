@@ -1,6 +1,6 @@
 $(function() {
 $(window).load(function() {
-  //вешает обработчик событий на документ
+  // вешает обработчик событий на документ
   document.addEventListener('click', EvtListener);
 });
 });
@@ -22,8 +22,10 @@ var stopwatchInit = 0;
 var stopwatchTimer = 0;
 // секундомер в формате 'mm:ss:ms'
 var stopwatchTimerText = '';
+// setTimeout
+var stopwatchTimeout;
 
-//обработчик событий на документе
+// обработчик событий на документе
 function EvtListener(e) {
   const $item = $(e.target);
   
@@ -32,9 +34,9 @@ function EvtListener(e) {
   }
 }
 
-//обрабатывает события клика на <td>
+// обрабатывает события клика на <td>
 function tdClick($item) {
-  const $tdActive = $('td.tdActive');
+  let $tdActive = $('td.tdActive');
   const $tdFound = $('td.tdFound');
   const tdActiveLength = $tdActive.length;
   const tdFoundLengthBefore = $tdFound.length;
@@ -44,6 +46,7 @@ function tdClick($item) {
     return;
   }
 
+
   if (tdActiveLength === 0) {
     $item.addClass('tdActive');
     $item.css( 'background-color', cellsAndColorArr[itemId] );
@@ -51,9 +54,10 @@ function tdClick($item) {
     $item.addClass('tdActive');
     $item.css( 'background-color', cellsAndColorArr[itemId] );
 	
+	$tdActive = $('td.tdActive');
     const color1 = $tdActive.eq(0).css('background-color');
     const color2 = $tdActive.eq(1).css('background-color');
-	
+
     if ( color1 === color2 ) {
       $tdActive.addClass('tdFound').removeClass('tdActive');
     } else {
@@ -67,18 +71,18 @@ function tdClick($item) {
   
   if ( tdFoundLengthAfter === 16 ) {
     alert('Вы выиграли!\nЗатраченное время: ' + stopwatchTimerText);
-    clearTimeout(clocktimer);
+    clearTimeout(stopwatchTimeout);
   }
 }
 
-//закрывает открытые плитки
+// закрывает открытые плитки
 function tdClose() {
   const $tdActive = $('td.tdActive');
   
   $tdActive.css('background-color', 'white').removeClass('tdActive');
 }
 
-//заполняет массив cellsAndColorArr, в котором key - номер ячейки, value - цвет этой ячейки
+// заполняет массив cellsAndColorArr, в котором key - номер ячейки, value - цвет этой ячейки
 function pairedСells() {
   const $pairedCellsItem = $('#pairedCells');
   const cellsLength = $pairedCellsItem.find('td').length;
@@ -101,7 +105,7 @@ function pairedСells() {
   }
 }
 
-//переводит числа от 0 до 15 в hex
+// переводит числа от 0 до 15 в hex
 function decimalToHex(number) {
   if ( 
     number > 9 
@@ -126,7 +130,7 @@ function decimalToHex(number) {
   }
 }
 
-//перемешивает массив
+// перемешивает массив
 function randomSortArr(arr) {
   let j;
   let temp;
@@ -141,9 +145,9 @@ function randomSortArr(arr) {
   return arr;
 }
 
-//секундомер
+// секундомер
 function stopwatch() {
-  //шаг секундомера (в мс)
+  // шаг секундомера (в мс)
   const stopwatchStep = 50;  
   
   stopwatchTimer = stopwatchTimer + stopwatchStep;
@@ -184,10 +188,10 @@ function stopwatch() {
   const $pairedCells__timer = $('.pairedCells__timer');
   
   $pairedCells__timer.text(stopwatchTimerText);
-  setTimeout(stopwatch, stopwatchStep);
+  stopwatchTimeout = setTimeout(stopwatch, stopwatchStep);
 }
 
-//инициализация секундомера и позиций пар
+// инициализация секундомера и позиций пар
 function stopwatchInitialization() {
   if (stopwatchInit === 0) {
     stopwatchInit = 1;
